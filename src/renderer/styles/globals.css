@@ -1,0 +1,404 @@
+@import 'tailwindcss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Quicksand', 'Noto Serif SC', sans-serif;
+}
+
+body {
+  background: #0f0c0a;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+/* Window */
+#root {
+  overflow: hidden;
+  contain: layout style;
+}
+
+.app-drag {
+  -webkit-app-region: drag;
+}
+
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+/* Performance hints */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.gpu-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Warm glassmorphism panel */
+.glass {
+  background: linear-gradient(
+    135deg,
+    rgba(25, 18, 12, 0.92) 0%,
+    rgba(18, 14, 10, 0.95) 50%,
+    rgba(22, 16, 11, 0.93) 100%
+  );
+  backdrop-filter: blur(50px) saturate(2);
+  -webkit-backdrop-filter: blur(50px) saturate(2);
+  border: 1px solid rgba(255, 200, 140, 0.15);
+  box-shadow:
+    0 12px 60px rgba(0, 0, 0, 0.7),
+    0 0 0 0.5px rgba(255, 200, 140, 0.12),
+    inset 0 1px 0 rgba(255, 220, 180, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.glass-light {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 200, 140, 0.06) 0%,
+    rgba(255, 180, 120, 0.03) 100%
+  );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 200, 140, 0.1);
+}
+
+/* Warm glow accent */
+.glow-warm {
+  box-shadow:
+    0 0 20px rgba(255, 180, 100, 0.1),
+    0 0 60px rgba(255, 140, 60, 0.05);
+}
+
+/* Fade in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.02); opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 180, 100, 0.1); }
+  50% { box-shadow: 0 0 30px rgba(255, 180, 100, 0.2); }
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 4s ease-in-out infinite;
+}
+
+.animate-breathe {
+  animation: breathe 6s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Button hover glow - warm */
+.btn-glow {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,200,140,0.15), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-glow:hover::before {
+  opacity: 1;
+}
+
+.btn-glow:hover {
+  background: rgba(255, 220, 180, 0.12);
+  box-shadow: 0 0 28px rgba(255, 180, 100, 0.1);
+}
+
+.btn-glow:active {
+  transform: scale(0.96);
+}
+
+/* Warm accent button */
+.btn-warm {
+  background: linear-gradient(135deg, rgba(255, 160, 80, 0.25), rgba(255, 120, 60, 0.18));
+  border: 1px solid rgba(255, 180, 100, 0.25);
+  transition: all 0.3s ease;
+}
+
+.btn-warm:hover {
+  background: linear-gradient(135deg, rgba(255, 160, 80, 0.35), rgba(255, 120, 60, 0.28));
+  box-shadow: 0 0 24px rgba(255, 140, 60, 0.2);
+}
+
+/* Scrollbar - warm */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 200, 140, 0.25);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 200, 140, 0.4);
+}
+
+/* Scene thumbnail - warm */
+.scene-thumb {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scene-thumb:hover {
+  transform: translateY(-6px) scale(1.06);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 200, 140, 0.2);
+}
+
+.scene-thumb.active {
+  box-shadow: 0 0 0 2px rgba(255, 200, 140, 0.6), 0 12px 36px rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* Volume slider - warm */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 200, 140, 0.15);
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffd4a8, #ffb870);
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(255, 180, 100, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+  box-shadow: 0 0 20px rgba(255, 180, 100, 0.7);
+}
+
+/* Tooltip - warm */
+.tooltip {
+  position: relative;
+}
+
+.tooltip::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(20, 16, 12, 0.95);
+  border: 1px solid rgba(255, 200, 140, 0.12);
+  color: rgba(255, 220, 180, 0.9);
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  backdrop-filter: blur(16px);
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-10px);
+}
+
+/* Decorative pattern for panels */
+.pattern-dots {
+  background-image: radial-gradient(
+    rgba(255, 200, 140, 0.04) 1px,
+    transparent 1px
+  );
+  background-size: 16px 16px;
+}
+
+.pattern-waves {
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(255, 200, 140, 0.02) 10px,
+      rgba(255, 200, 140, 0.02) 20px
+    );
+}
+
+/* Timer decorative ring */
+.timer-ring {
+  position: relative;
+}
+
+.timer-ring::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 180, 100, 0.3),
+    rgba(255, 140, 60, 0.1),
+    rgba(255, 180, 100, 0.3),
+    rgba(255, 140, 60, 0.1),
+    rgba(255, 180, 100, 0.3)
+  );
+  animation: rotate-slow 20s linear infinite;
+  opacity: 0.5;
+}
+
+/* Warm input style */
+input[type="number"],
+input[type="text"] {
+  background: rgba(255, 200, 140, 0.05) !important;
+  border: 1px solid rgba(255, 200, 140, 0.1) !important;
+  color: rgba(255, 220, 180, 0.9) !important;
+  transition: all 0.3s ease;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus {
+  border-color: rgba(255, 180, 100, 0.3) !important;
+  box-shadow: 0 0 16px rgba(255, 180, 100, 0.1);
+  outline: none;
+}
+
+/* Toggle switch warm */
+.toggle-warm {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  border-radius: 11px;
+  background: rgba(255, 200, 140, 0.1);
+  border: 1px solid rgba(255, 200, 140, 0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.toggle-warm.active {
+  background: linear-gradient(135deg, rgba(255, 160, 80, 0.5), rgba(255, 120, 60, 0.4));
+  border-color: rgba(255, 180, 100, 0.3);
+}
+
+.toggle-warm::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(255, 220, 180, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toggle-warm.active::after {
+  transform: translateX(18px);
+}

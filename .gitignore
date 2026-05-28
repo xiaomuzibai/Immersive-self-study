@@ -1,0 +1,12 @@
+node_modules/
+out/
+dist/
+.superpowers/
+*.db
+*.log
+.env
+.env.*
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
